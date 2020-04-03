@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="static/styles.css">
+
+
+    <script src="{{url_for('static', filename='dropzone.js')}}"></script>
+    <script src="{{url_for('static', filename='jquery-3.4.0.min.js')}}"></script>
+  </head>
+  <body>
+
+        <script>
+                function colorchange(id)
+            {
+              var el = document.getElementById(id);
+              var currentClass = el.getAttribute("class");
+              if(currentClass == 'instrument unselected')
+              {
+                  el.setAttribute("class", "instrument selected");
+              } else {
+                 el.setAttribute("class", "instrument unselected");
+              }
+        
+            }
+            // "myAwesomeDropzone" is the camelized version of the HTML element's ID
+            Dropzone.options.filedropzone = {
+                paramName: "new_song", // The name that will be used to transfer the file
+                thumbnailHeight: 5
+            };
+        </script>
+
+    <div class="heading"><img src="{{url_for('static', filename='div-large.png')}}"></div>
+    <div class="sub-heading"><strong>Web app for splitting songs into up to 5 distinct tracks</strong></div>
+
+
+    <div class="step-heading"><strong>Step 1.</strong> Choose file to upload</div>
+    <div class="dropzone-container">
+        <form action="/upload" id="filedropzone" class="dropzone" method="post" enctype="multipart/form-data"> 
+            <div class="dz-message" data-dz-message><span>Drop file here or click to upload.</span></div>
+            <div class="fallback">
+                <input name="file" type="file" />
+            </div>
+        </form>
+    </div>
+
+
+    <div class="step-heading"><strong>Step 2.</strong> Select the tracks present in the song</div>
+    <div class="select-tracks">
+        <div class="instrument unselected" id="vocals" onclick="colorchange('vocals')">
+            <img src="{{url_for('static', filename='vocals-icon.png')}}">
+        </div>
+        <div class="instrument unselected" id="drums" onclick="colorchange('drums')">
+        <img src="{{url_for('static', filename='drum-icon.png')}}">
+    </div>
+        <div class="instrument unselected" id="guitar" onclick="colorchange('guitar')">
+        <img src="{{url_for('static', filename='guitar-icon.png')}}">
+    </div>
+        <div class="instrument unselected" id="piano" onclick="colorchange('piano')">
+        <img src="{{url_for('static', filename='piano-icon.png')}}">
+    </div>
+    </div>
+
+    <div class="step-heading"><strong>Step 3.</strong> Submit request to Smart AI Engine</div>
+    <a href="{{url_for( 'split' )}}" class="button1"> Submit</a>
+    <a href="{{url_for( 'home' )}}" class="button1"> Reset</a>
+    </body>
+</html>
